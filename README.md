@@ -9,7 +9,7 @@ The usage of package manage tools in [Github's top 1000 Go repositories](http://
 | ------------- |:-------------:| :-----:|
 |Makefile||324|
 |godep|[godep](https://github.com/tools/godep)|84|
-|glide|[glide](https://github.com/bumptech/glide)|65|
+|glide|[glide](https://github.com/Masterminds/glide)|65|
 |govendor|[govendor](https://github.com/kardianos/govendor)|59|
 |submodule||43|
 |gvt|[gvt](https://github.com/FiloSottile/gvt)|26|

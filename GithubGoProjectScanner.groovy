@@ -13,7 +13,7 @@ class GithubGoProjectScanner {
                         gopm             : [files: '.gopmfile', url: 'https://github.com/gpmgo/gopm'],
                         gvt              : [files: 'vendor/manifest', url: 'https://github.com/FiloSottile/gvt'],
                         gvend            : [files: 'vendor.yml', url: 'https://github.com/govend/govend'],
-                        glide            : [files: 'glide.yaml|glide.lock', url: 'https://github.com/bumptech/glide'],
+                        glide            : [files: 'glide.yaml|glide.lock', url: 'https://github.com/Masterminds/glide'],
                         trash            : [files: 'vendor.conf', url: 'https://github.com/rancher/trash'],
                         gom              : [files: 'Gomfile', url: 'https://github.com/mattn/gom'],
                         bunch            : [files: 'bunchfile', url: 'https://github.com/dkulchenko/bunch'],
