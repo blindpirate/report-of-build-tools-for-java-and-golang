@@ -11,15 +11,13 @@ class GithubTopRankCrawler {
     static String TOP_JSON = 'top.json'
 
     static void main(String[] args) {
-        if(args.length == 0){
+        if (args.length == 0) {
             println 'a location must be specified!'
             return
         }
-        Path baseDir=Paths.get(args[0])
+        Path baseDir = Paths.get(args[0])
         getTop1000(baseDir).each {
-            String fullName = it.full_name
-            String cloneUrl = it.clone_url
-            cloneOne(baseDir,fullName, cloneUrl)
+            cloneOne(baseDir, it.full_name, it.clone_url)
         }
     }
 
@@ -28,12 +26,10 @@ class GithubTopRankCrawler {
         if (topDotJson.exists()) {
             return new JsonSlurper().parseText(topDotJson.getText())
         } else {
-            List allItems = []
-            for (int i = 1; i <= 10; i++) {
-                String json = new URL(TARGET_URL.replace('${page}', i.toString())).getText()
-                allItems.addAll(new JsonSlurper().parseText(json).items)
-            }
-
+            List allItems = (1..10).collect({ it ->
+                String json = new URL(TARGET_URL.replace('${page}', it.toString())).getText()
+                return new JsonSlurper().parseText(json).items
+            }).flatten()
             topDotJson.write(JsonOutput.toJson(allItems))
             return allItems
         }
@@ -50,9 +46,9 @@ class GithubTopRankCrawler {
     }
 
     static void runInheritIO(List<String> args, Map<String, String> envs) throws IOException, InterruptedException {
-        ProcessBuilder pb = new ProcessBuilder().command(args).inheritIO();
-        pb.environment().putAll(envs);
-        pb.start().waitFor();
+        ProcessBuilder pb = new ProcessBuilder().command(args).inheritIO()
+        pb.environment().putAll(envs)
+        pb.start().waitFor()
     }
 
 }
