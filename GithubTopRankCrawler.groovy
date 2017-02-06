@@ -42,7 +42,7 @@ class GithubTopRankCrawler {
             println("${fullName} exists, skip.")
             return
         }
-        runInheritIO(['git', 'clone', cloneUrl, location.toAbsolutePath().toString()], [:])
+        runInheritIO(['git', 'clone', '--depth', '1', '--shallow-submodules', cloneUrl, location.toAbsolutePath().toString()], [:])
     }
 
     static void runInheritIO(List<String> args, Map<String, String> envs) throws IOException, InterruptedException {
