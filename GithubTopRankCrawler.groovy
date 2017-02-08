@@ -1,5 +1,3 @@
-package com.github.blindpirate.gogradle.statistic
-
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
@@ -11,19 +9,41 @@ class GithubTopRankCrawler {
     static String TOP_JSON = 'top.json'
 
     static void main(String[] args) {
-        if (args.length < 2) {
-            println 'lauguage and location must be specified!'
+
+        def cli = new CliBuilder(usage: 'groovy GithubTopRankCrawler <options>')
+        cli.l(longOpt: 'language', args: 1, 'specify a language, e.g. go/java')
+        cli.s(longOpt: 'shallow', 'use shallow clone')
+        cli.d(longOpt: 'dir', args: 1, 'specify the target directory')
+
+        def options = cli.parse(args)
+
+        if (!options) {
             return
         }
-        String language = args[0]
-        Path baseDir = Paths.get(args[1])
-        getTop1000(language, baseDir).each {
-            cloneOne(baseDir, it.full_name, it.clone_url)
+        if (!options.l && !options.s && !options.d) {
+            cli.usage()
+            return
+        }
+
+        if (!options.l) {
+            println 'language must be specified!'
+            return
+        }
+        if (!options.d) {
+            println 'target directory must be specified!'
+            return
+        }
+        File baseDir = Paths.get(options.d).toFile()
+        if (!baseDir.exists()) {
+            baseDir.mkdir()
+        }
+        getTop1000(options.l, baseDir).each {
+            cloneOne(baseDir, it.full_name, it.clone_url, options.s != null)
         }
     }
 
-    static List getTop1000(String language, Path baseDir) {
-        File topDotJson = baseDir.resolve(TOP_JSON).toFile()
+    static List getTop1000(String language, File baseDir) {
+        File topDotJson = new File(baseDir, TOP_JSON)
         if (topDotJson.exists()) {
             return new JsonSlurper().parseText(topDotJson.getText())
         } else {
@@ -38,20 +58,26 @@ class GithubTopRankCrawler {
     }
 
     // a/b  https://github.com/a/b.git
-    static void cloneOne(Path baseDir, String fullName, String cloneUrl) {
-        Path location = baseDir.resolve(fullName.replaceAll(/\//, '_'))
-        if (location.toFile().exists()) {
+    static void cloneOne(File baseDir, String fullName, String cloneUrl, boolean shallow) {
+        File location = new File(baseDir, fullName.replaceAll(/\//, '_'))
+        if (new File(location, '.git').exists()) {
             println("${fullName} exists, skip.")
             return
+        } else {
+            location.mkdir()
         }
-        runInheritIO(['git', 'clone', '--depth', '1', '--shallow-submodules', cloneUrl, location.toAbsolutePath().toString()], [:])
+        if (shallow) {
+            runInheritIO(['git', 'clone', '--depth', '1', cloneUrl], location)
+        } else {
+            runInheritIO(['git', 'clone', cloneUrl], location)
+
+        }
     }
 
-    static void runInheritIO(List<String> args, Map<String, String> envs) throws IOException, InterruptedException {
+    static void runInheritIO(List<String> args, File workingDir) throws IOException, InterruptedException {
         ProcessBuilder pb = new ProcessBuilder().command(args).inheritIO()
-        pb.environment().putAll(envs)
+        pb.directory(workingDir)
         pb.start().waitFor()
     }
-
 }
 
