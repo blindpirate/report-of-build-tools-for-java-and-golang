@@ -9,7 +9,7 @@ class JavaBuildToolScanner {
     static main(String[] args) {
         def cli = new CliBuilder(usage: 'groovy GithubTopRankCrawler <options>')
         cli.s(longOpt: 'start', args: 1, 'start date, yyyy-MM-dd')
-        cli.e(longOpt: 'end', 'end date yyyy-MM-dd')
+        cli.e(longOpt: 'end', 'end date, yyyy-MM-dd')
         cli.d(longOpt: 'dir', args: 1, 'specify the target directory')
         cli.i(longOpt: 'interval-days', args: 1, 'the interval in days')
 
@@ -64,8 +64,8 @@ class JavaBuildToolScanner {
     static getStartDate(options) {
         def start = options.s
         if (!start) {
-            println('start date is set to 2000-01-01!')
-            start = '2000-01-01'
+            println("start date is set to ${new Date().format('yyyy-MM-dd')}!")
+            start = new Date().format('yyyy-MM-dd')
         }
         return Date.parse('yyyy-MM-dd', start)
     }
@@ -91,7 +91,7 @@ class JavaBuildToolScanner {
     static List<Date> sample(Date start, Date end, int interval) {
         List ret = []
         Date current = start
-        while (current < end) {
+        while (current <= end) {
             ret.add(current)
             current += interval
         }
