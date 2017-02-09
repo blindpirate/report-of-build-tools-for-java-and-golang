@@ -1,5 +1,3 @@
-
-
 class GoBuildToolScanner {
     static Map tools = [:]
 
@@ -21,7 +19,7 @@ class GoBuildToolScanner {
         tools.put(new Tool(name: 'nut', identityFiles: ['Nut.toml']), 'https://github.com/jingweno/nut')
         tools.put(new Tool(name: 'gpm/johnny-deps', identityFiles: ['Godeps']), ['https://github.com/pote/gpm', 'https://github.com/VividCortex/johnny-deps'])
         tools.put(new Tool(name: 'Makefile', identityFiles: ['makefile', 'Makefile']), '')
-        tools.put(new Submodule(name: 'submodule'), '')
+        tools.put(new Tool(name: 'submodule', identityFiles: ['.gitmodules']), '')
         tools.put(BuildToolScanner.OTHER_TOOL, '')
     }
 
@@ -31,10 +29,10 @@ class GoBuildToolScanner {
             return
         }
 
-        File allProjects = Paths.get(args[0]).toFile()
+        File allProjects = new File(args[0])
         List<File> subdirs = allProjects.listFiles().findAll { it.isDirectory() }
 
-        Map<Tool, Integer> result = BuildToolScanner.scan(tools.keySet() as List, null, subdirs)
+        Map<Tool, Integer> result = BuildToolScanner.scanOneDate(tools.keySet() as List, null, subdirs)
 
         println('Markdown:\n' + toMarkdownTable(result))
     }
@@ -65,13 +63,6 @@ class GoBuildToolScanner {
             return ''
         } else {
             return "[${tool.name}](${urls})"
-        }
-    }
-
-
-    static class Submodule extends Tool {
-        boolean match(File dir) {
-
         }
     }
 }
