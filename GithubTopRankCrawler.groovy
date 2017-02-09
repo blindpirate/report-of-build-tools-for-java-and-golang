@@ -44,10 +44,13 @@ class GithubTopRankCrawler {
     static List getTop1000(String language, File baseDir) {
         File topDotJson = new File(baseDir, TOP_JSON)
         if (topDotJson.exists()) {
+            println("${topDotJson} exists, use it.")
             return new JsonSlurper().parseText(topDotJson.getText())
         } else {
+            println("Fetching repository list...")
             String url = TARGET_URL.replace('${language}', language)
             List allItems = (1..10).collect({ it ->
+                println("Fetching page ${it}")
                 String json = new URL(url.replace('${page}', it.toString())).getText()
                 return new JsonSlurper().parseText(json).items
             }).flatten()
