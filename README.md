@@ -17,6 +17,8 @@ In January 2017, the usage of build tools in [Github's top 1000 Java repositorie
 
 And the trending over the past 8 years is:
 
+![trending](https://raw.githubusercontent.com/blindpirate/report-of-build-tools-for-java-and-golang/master/trending.png)
+
 ## Algorithm
 
 - Clone top 1000 Go repositories to local disk
