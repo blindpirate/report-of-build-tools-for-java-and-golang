@@ -1,7 +1,6 @@
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
-import java.nio.file.Path
 import java.nio.file.Paths
 
 class GithubTopRankCrawler {
@@ -70,7 +69,6 @@ class GithubTopRankCrawler {
             runInheritIO(['git', 'clone', '--depth', '1', cloneUrl], location)
         } else {
             runInheritIO(['git', 'clone', cloneUrl], location)
-
         }
     }
 

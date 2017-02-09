@@ -1,6 +1,45 @@
-# A survey on golang package management tools
+# A Survey on Build Tools of Golang and Java
 
+# Java
 
+## Conclusion
+
+In January 2017, the usage of build tools in [Github's top 1000 Java repositories](http://github-rank.com/star?language=Java) is as follows:
+
+| Tool Name     | Reference Count  |
+| ------------- | :-----:|
+|Gradle|627|
+|Maven|264|
+|Ant|52|
+|Npm|4|
+|Bazel|3|
+|Make|1|
+
+And the trending over the past 8 years is:
+
+## Algorithm
+
+- Clone top 1000 Go repositories to local disk
+- Analyze the repositories by identity files:
+
+| Tool Name     |Identity Files|
+| ------------- |:-----:|
+|Gradle |build.gradle|
+|Maven |pom.xml|
+|Ant |build.xml|
+|Npm |package.json|
+|Bazel |BUILD|
+|Make |Makefile/makefile|
+
+## How 
+
+- Make sure [Git](https://git-scm.com/)/[Groovy 2.4+](http://www.groovy-lang.org/download.html)/[JDK 1.7+](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) are installed.
+- Run `groovy GithubTopRankCrawler.groovy -l java -d <path to store the 1000 repos>` to clone all repositories locally. 
+- Run `groovy JavaBuildToolScanner.groovy -d <path to store the 1000 repos>` to analyze these repos.
+
+# Golang
+
+## Conclusion
 There are various package management tools for golang as listed [here](https://github.com/golang/go/wiki/PackageManagementTools). But which one is the most popular? 
 
 The usage of package manage tools in [Github's top 1000 Go repositories](http://github-rank.com/star?language=Go) is as follows:
@@ -26,7 +65,7 @@ Technically, `make` is not a package management tool, here it is just for compar
 
 Submodule refers to a set of tools which use [git submodule](https://git-scm.com/docs/git-submodule) to manage dependencies such as [manul](https://github.com/kovetskiy/manul) and [Vendetta](https://github.com/dpw/vendetta) and so on.
 
-# Algorithm
+## Algorithm
 
 - Clone top 1000 Go repositories to local disk
 - Analyze the repositories by identity files:
@@ -52,11 +91,12 @@ Submodule refers to a set of tools which use [git submodule](https://git-scm.com
 | Makefile |makefile or Makefile|
 | submodule |.gitmodules|
 
-
-# How to run the scripts
+## How
 
 - Make sure [Git](https://git-scm.com/)/[Groovy 2.4+](http://www.groovy-lang.org/download.html)/[JDK 1.7+](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) are installed.
-- Run `groovy GithubTopRankCrawler.groovy <path to store the 1000 repos>` to clone all repositories locally (about 17.5 GiB).
-- Run `groovy GithubGoProjectScanner.groovy <path to store the 1000 repos>` to analyze these repos.
+- Run `groovy GithubTopRankCrawler.groovy -l go -d <path to store the 1000 repos>` to clone all repositories locally.
+- Run `groovy GoBuildToolScanner.groovy <path to store the 1000 repos>` to analyze these repos.
+
+
 
 
