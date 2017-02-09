@@ -37,7 +37,7 @@ class GithubTopRankCrawler {
             baseDir.mkdir()
         }
         getTop1000(options.l, baseDir).each {
-            cloneOne(baseDir, it.full_name, it.clone_url, options.s != null)
+            cloneOne(baseDir, it.full_name, it.clone_url, options.s)
         }
     }
 
@@ -50,7 +50,7 @@ class GithubTopRankCrawler {
             println("Fetching repository list...")
             String url = TARGET_URL.replace('${language}', language)
             List allItems = (1..10).collect({ it ->
-                println("Fetching page ${it}")
+                println("Fetching page ${it} ")
                 String json = new URL(url.replace('${page}', it.toString())).getText()
                 return new JsonSlurper().parseText(json).items
             }).flatten()
@@ -69,15 +69,14 @@ class GithubTopRankCrawler {
             location.mkdir()
         }
         if (shallow) {
-            runInheritIO(['git', 'clone', '--depth', '1', cloneUrl], location)
+            runInheritIO(['git', 'clone', '--depth', '1', cloneUrl, location.absolutePath])
         } else {
-            runInheritIO(['git', 'clone', cloneUrl], location)
+            runInheritIO(['git', 'clone', cloneUrl, location.absolutePath])
         }
     }
 
-    static void runInheritIO(List<String> args, File workingDir) throws IOException, InterruptedException {
+    static void runInheritIO(List<String> args) throws IOException, InterruptedException {
         ProcessBuilder pb = new ProcessBuilder().command(args).inheritIO()
-        pb.directory(workingDir)
         pb.start().waitFor()
     }
 }
