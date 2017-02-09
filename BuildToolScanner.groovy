@@ -4,11 +4,11 @@ class BuildToolScanner {
 
     static LinkedHashMap<Date, Map<Tool, Integer>> scan(List<Tool> tools, List<Date> dates, List<File> projectDirs) {
         return dates.collectEntries { date ->
-            [date, scan(tools, date, projectDirs)]
+            [date, scanOneDate(tools, date, projectDirs)]
         }
     }
 
-    static Map<Tool, Integer> scan(List<Tool> tools, Date date, List<File> projectDirs) {
+    static Map<Tool, Integer> scanOneDate(List<Tool> tools, Date date, List<File> projectDirs) {
         Map<Tool, Integer> counts = [:]
         projectDirs.each { dir ->
             if (date != null) {
@@ -21,11 +21,8 @@ class BuildToolScanner {
                 tool.match(dir)
             }
 
-            if (matchedTool == null) {
-                println("Cannot find ${dir}")
-            }
-
             def result = matchedTool ?: OTHER_TOOL
+            println("Build tool of ${dir} is: ${result}")
             if (counts[result] == null) {
                 counts[result] = 0
             }
