@@ -70,7 +70,7 @@ class BuildToolScanner {
         String stdout = pb.start().inputStream.getText('UTF8')
         String stderr = pb.start().errorStream.getText('UTF8')
         if (stderr) {
-            throw new IllegalStateException("stderr:${stderr}")
+            throw new IllegalStateException("stderr in ${dir}:${stderr}")
         }
         return stdout
     }
