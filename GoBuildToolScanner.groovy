@@ -2,6 +2,7 @@ class GoBuildToolScanner {
     static Map tools = [:]
 
     static {
+        tools.put(new Tool(name: 'dep', identityFiles: ['Gopkg.toml']), 'https://github.com/golang/dep')
         tools.put(new Tool(name: 'godep', identityFiles: ['Godeps/Godeps.json']), 'https://github.com/tools/godep')
         tools.put(new Tool(name: 'govendor', identityFiles: ['vendor/vendor.json']), 'https://github.com/kardianos/govendor')
         tools.put(new Tool(name: 'gopm', identityFiles: ['.gopmfile']), 'https://github.com/gpmgo/gopm')
