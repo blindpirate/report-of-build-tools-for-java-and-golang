@@ -46,22 +46,25 @@ There are various package management tools for golang as listed [here](https://g
 
 The usage of package manage tools in [Github's top 1000 Go repositories](http://github-rank.com/star?language=Go) is as follows:
 
-| Tool Name     |Url           | Reference Count  |
-| ------------- |:-------------:| :-----:|
-|Makefile|[Makefile]()|199|
-|godep|[godep](https://github.com/tools/godep)|119|
-|govendor|[govendor](https://github.com/kardianos/govendor)|65|
-|glide|[glide](https://github.com/Masterminds/glide)|64|
-|gvt|[gvt](https://github.com/FiloSottile/gvt)|25|
-|submodule|[submodule]()|8|
-|gpm/johnny-deps|[gpm](https://github.com/pote/gpm) [johnny-deps](https://github.com/VividCortex/johnny-deps)|7|
-|trash|[trash](https://github.com/rancher/trash)|7|
-|glock|[glock](https://github.com/robfig/glock)|5|
-|gom|[gom](https://github.com/mattn/gom)|4|
-|gopack|[gopack](https://github.com/d2fn/gopack)|3|
-|gopm|[gopm](https://github.com/gpmgo/gopm)|3|
-|gvend|[gvend](https://github.com/govend/govend)|2|
-|goop|[goop](https://github.com/nitrous-io/goop)|1|
+| Tool Name     |Url           | Reference Count (Feb 2017) | Reference Count (Nov 2017) |
+| ------------- |:-------------:| :-----------------:|:-----------------:|
+|Makefile|[Makefile]()|199|181|
+|dep|[dep](https://github.com/golang/dep)|N/A|94|
+|godep|[godep](https://github.com/tools/godep)|119|90|
+|govendor|[govendor](https://github.com/kardianos/govendor)|65|84|
+|glide|[glide](https://github.com/Masterminds/glide)|64|77|
+|gvt|[gvt](https://github.com/FiloSottile/gvt)|25|16|
+|trash|[trash](https://github.com/rancher/trash)|7|13|
+|submodule|[submodule]()|8|6|
+|gpm/johnny-deps|[gpm](https://github.com/pote/gpm) [johnny-deps](https://github.com/VividCortex/johnny-deps)|7|6|
+|glock|[glock](https://github.com/robfig/glock)|5|4|
+|gom|[gom](https://github.com/mattn/gom)|4|2|
+|gopack|[gopack](https://github.com/d2fn/gopack)|3|2|
+|gopm|[gopm](https://github.com/gpmgo/gopm)|3|1|
+|goop|[goop](https://github.com/nitrous-io/goop)|1|1|
+|gvend|[gvend](https://github.com/govend/govend)|2|0|
+
+[dep](https://github.com/golang/dep) had a first release in May 2017, did not exist for first stats.
 
 Technically, `make` is not a package management tool, here it is just for comparison.
 
