@@ -1,3 +1,5 @@
+import groovy.cli.commons.CliBuilder
+
 class JavaBuildToolScanner {
     static List<Tool> JAVA_TOOLS = [new Tool(name: 'Maven', identityFiles: ['pom.xml']),
                                     new Tool(name: 'Ant', identityFiles: ['build.xml']),
@@ -7,14 +9,19 @@ class JavaBuildToolScanner {
                                     new Tool(name: 'Make', identityFiles: ['Makefile', 'makefile'])]
 
     static main(String[] args) {
-        def cli = new CliBuilder(usage: 'groovy GithubTopRankCrawler <options>')
-        cli.s(longOpt: 'start', args: 1, 'start date, yyyy-MM-dd')
-        cli.e(longOpt: 'end', 'end date, yyyy-MM-dd')
-        cli.d(longOpt: 'dir', args: 1, 'specify the target directory')
-        cli.i(longOpt: 'interval-days', args: 1, 'the interval in days')
+        def cli = new CliBuilder(
+                usage: 'groovy JavaBuildToolScanner.groovy -s startDate(yyyy-MM-dd) -e endDate(yyyy-MM-dd) -d directory -i intervalDays',
+        )
+        cli.with {
+            s(longOpt: 'start', 'Start date', args: 1, required: true)
+            e(longOpt: 'end', 'End date', args: 1, required: true)
+            d(longOpt: 'dir', 'Target output directory', args: 1, required: true)
+            i(longOpt: 'interval-days', 'Interval in days', args: 1, required: true)
+        }
 
         def options = cli.parse(args)
         if (!options) {
+            println('you must pass a bunch of arguments')
             return
         }
 

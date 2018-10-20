@@ -1,3 +1,4 @@
+import groovy.cli.commons.CliBuilder
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
@@ -8,11 +9,14 @@ class GithubTopRankCrawler {
     static String TOP_JSON = 'top.json'
 
     static void main(String[] args) {
-
-        def cli = new CliBuilder(usage: 'groovy GithubTopRankCrawler <options>')
-        cli.l(longOpt: 'language', args: 1, 'specify a language, e.g. go/java')
-        cli.s(longOpt: 'shallow', 'use shallow clone')
-        cli.d(longOpt: 'dir', args: 1, 'specify the target directory')
+        def cli = new CliBuilder(
+                usage: 'groovy GithubTopRankCrawler <options>'
+        )
+        cli.with {
+            l(longOpt: 'language', 'Programming language', args: 1, required: true)
+            s(longOpt: 'shallow', 'Shallow', args: 1, required: true)
+            d(longOpt: 'dir', 'Target directory', args: 1, required: true)
+        }
 
         def options = cli.parse(args)
 
@@ -37,7 +41,7 @@ class GithubTopRankCrawler {
             baseDir.mkdir()
         }
         getTop1000(options.l, baseDir).each {
-            cloneOne(baseDir, it.full_name, it.clone_url, options.s)
+            cloneOne(baseDir, it.full_name, it.clone_url, options.s.toBoolean())
         }
     }
 
